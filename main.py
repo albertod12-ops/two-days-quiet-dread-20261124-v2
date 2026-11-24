@@ -33,6 +33,10 @@ def main() -> None:
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     with open(OUTPUT_PATH, "w", encoding="utf-8", newline="") as f:
         f.write(text)
+    # Coordinator fix 24 Nov: VM umask 0007 leaves entry.txt 660; the
+    # grader must be able to read it, so force the 0644 the other
+    # text entries in this run already use.
+    os.chmod(OUTPUT_PATH, 0o644)
 
 
 if __name__ == "__main__":
